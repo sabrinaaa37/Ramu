@@ -6,7 +6,7 @@ import re
 import json
 import os
 
-if os.environ['LOCAL']== "YES HOME!":
+if os.environ['BOT_LOCAL'] == "YES HOME!":
     with open('local.json','r') as f:
         config = json.load(f)
 else:
