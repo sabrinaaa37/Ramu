@@ -7,9 +7,6 @@ higt={'a': 'e', 'b': 'b', 'c': 'm', 'd': 'm', 'e': 'e', 'f': 'm', 'g': 'm', 'h':
 tight={'a': 'm', 'b': 'm', 'c': 'm', 'd': 'm', 'e': 'm', 'f': 'm', 'g': 'm', 'h': 'm', 'i': 'm', 'j': 'm', 'k': 'm', 'l': 'm', 'm': 'm', 'n': 'm', 'o': 'm', 'p': 'm', 'q': 'm', 'r': 'm', 's': 'm', 't': 'm', 'u': 'm', 'v': 'm', 'w': 'm', 'x': 'm', 'y': 'm', 'z': 'm', 'A': 'm', 'B': 'm', 'C': 'm', 'D': 'm', 'E': 'm', 'F': 'm', 'G': 'm', 'H': 'm', 'I': 'm', 'J': 'm', 'K': 'm', 'L': 'm', 'M': 'm', 'N': 'm', 'O': 'm', 'P': 'm', 'Q': 'm', 'R': 'm', 'S': 'm', 'T': 'm', 'U': 'm', 'V': 'm', 'W': 'm', 'X': 'm', 'Y': 'm', 'Z': 'm'}
 lvls={'lowt':lowt,'medt':medt,'higt':higt,'tight':tight}
 
-def preprocess(msg:discord.Message):
-    ...
-
 def gag(msg:str, intensity:str, charset:dict=None) -> str:
     cont=msg.content
     if cont=='':

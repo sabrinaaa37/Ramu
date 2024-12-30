@@ -2,6 +2,7 @@ import discord
 from discord import ui, app_commands
 from client import client
 from utils.messages import *
+from ui.register import RegisterView
 import pyrebase
 import json
 import os
@@ -32,7 +33,13 @@ async def ungag(inter:discord.Interaction,mem:discord.Member):
     await intersend(inter,inter.user,aclient,msg)
     await inter.response.send_message(msg,ephemeral=True)
 
+@app_commands.command(name="register", description="register yourself with the bot for more stuff!")
+async def register(inter:discord.Interaction):
+    await inter.response.send_message(view=RegisterView(user=inter.user, db=db))
+
+
 bot.add_command(gag)
 bot.add_command(ungag)
+bot.add_command(register)
 aclient.run(token=config['bot']['token'])
 
