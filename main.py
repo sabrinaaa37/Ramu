@@ -1,10 +1,8 @@
 import discord
-from discord.ext import tasks
 from discord import ui, app_commands
 from client import client
-import pickle
+from utils.messages import *
 import pyrebase
-import re
 import json
 import os
 
@@ -23,12 +21,16 @@ bot = aclient.bot
 @app_commands.command(name="gag",description="gags someone")
 async def gag(inter:discord.Interaction,mem:discord.Member):
     db.child('guilds').child(inter.guild.id).child(mem.id).update({'gag':{'t_lvl':'higt'}})
-    await inter.response.send_message("got gagged")
+    msg = f"{mem.display_name} was gagged{(f' by {inter.user.display_name}') if inter.user.id!=mem.id else ''}"
+    await intersend(inter,inter.user,aclient,msg)
+    await inter.response.send_message(msg,ephemeral=True)
 
 @app_commands.command(name="ungag",description="ungags someone")
 async def ungag(inter:discord.Interaction,mem:discord.Member):
     db.child('guilds').child(inter.guild.id).child(mem.id).update({'gag':None})
-    await inter.response.send_message("got ungagged")
+    msg = f"{mem.display_name} was ungagged{(f' by {inter.user.display_name}') if inter.user.id!=mem.id else ''}"
+    await intersend(inter,inter.user,aclient,msg)
+    await inter.response.send_message(msg,ephemeral=True)
 
 bot.add_command(gag)
 bot.add_command(ungag)

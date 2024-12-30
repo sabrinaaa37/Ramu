@@ -66,5 +66,34 @@ async def websend(msg:discord.Message, client:discord.Client, cont:str=None, del
     await webh.send(cont, avatar_url=msg.author.avatar.url, username=f"{msg.author.display_name}")
     if msg.attachments:
         await webh.send(files=da_files, avatar_url=msg.author.avatar.url, username=f"{msg.author.display_name}")
-    
 
+async def intersend(inter:discord.Message, mem:discord.Member, client:discord.Client, cont:str, attachments:list[discord.File]=None):
+    """
+    Sends a webhook message in the channel of the `inter` object
+    Args:
+        inter: The discord.Interaction object
+        client: The bot object
+        cont: The content you wish to send the webhook interd
+    """
+    wlist= await inter.channel.webhooks()
+    webh=None
+    if not wlist:
+        webh=await inter.channel.create_webhook(name='Kigamuri Mask')
+    else:
+        for web in wlist:
+            if web.user.name==client.user.name:
+                webh=web
+                break
+
+        if webh == None:
+            webh=await inter.channel.create_webhook(name='Kigurumi Mask')
+
+    if attachments:
+        da_files=[]
+        for a in inter.attachments:
+            file=await a.to_file()
+            da_files.append(file)
+
+    await webh.send(cont, avatar_url=mem.avatar.url, username=f"{mem.display_name}")
+    if attachments:
+        await webh.send(files=da_files, avatar_url=mem.avatar.url, username=f"{mem.display_name}")
