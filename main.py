@@ -37,9 +37,31 @@ async def ungag(inter:discord.Interaction,mem:discord.Member):
 async def register(inter:discord.Interaction):
     await inter.response.send_message(view=RegisterView(user=inter.user, db=db))
 
+@app_commands.command(name="profile", description="lookup someone's profile or yours")
+async def profile(inter:discord.Interaction, mem:discord.Member=None):
+    data = db.child('members').child(mem.id).child('profile').get().val()
+    if not data:
+        await inter.response.send_message("User not registered")
+        return
+    embed = discord.Embed(
+            title = f"__• Profile of {mem.display_name}__",
+            color=discord.Color.from_str('#ffdd70'),
+            description="📜**__Overview:__**"
+            )
+    reg_time = data['registered']
+    dominance = data['dominance']
+    pronouns = data['pronouns']
+    sexuality = data['sexuality']
+    embed.add_field(name="Dominance:", value=f'`{dominance}`', inline=True)
+    embed.add_field(name="Pronouns:", value=f'`{pronouns}`', inline=True)
+    embed.add_field(name="Sexuality:", value=f'`{sexuality}`', inline=True)
+    embed.add_field(name="Registered on:", value=f'<t:{reg_time}>', inline=True)
+    embed.set_thumbnail(url = mem.avatar.url)
+    await inter.response.send_message(embed=embed)
 
 bot.add_command(gag)
 bot.add_command(ungag)
 bot.add_command(register)
+bot.add_command(profile)
 aclient.run(token=config['bot']['token'])
 

@@ -91,16 +91,18 @@ class SubmitButton(ui.Button):
             color=discord.Color.from_str('#ffdd70'),
             description="📜**__Overview:__**"
             )
+        reg_time = int(time.time())
         embed.add_field(name="Dominance:", value=f'`{self.parent_view.dominance.values[0]}`', inline=True)
         embed.add_field(name="Pronouns:", value=f'`{self.parent_view.pronouns.values[0]}`', inline=True)
         embed.add_field(name="Sexuality:", value=f'`{self.parent_view.sexuality.values[0]}`', inline=True)
-        embed.add_field(name="Registered on:", value=f'<t:{int(time.time())}>', inline=True)
+        embed.add_field(name="Registered on:", value=f'<t:{reg_time}>', inline=True)
         embed.set_thumbnail(url = self.user.avatar.url)
 
         data = {}
         data['dominance'] = dominance
         data['pronouns'] = pronouns
         data['sexuality'] = sexuality
+        data['registered'] = reg_time
 
         self.db.child('members').child(self.user.id).child('profile').set(data)
         await interaction.response.defer()
