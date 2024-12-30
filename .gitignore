@@ -1,4 +1,6 @@
 ramu
 local.json
 setup.py
+tests
 *.sabs
+__pycache__
