@@ -35,7 +35,9 @@ async def ungag(inter:discord.Interaction,mem:discord.Member):
 
 @app_commands.command(name="register", description="register yourself with the bot for more stuff!")
 async def register(inter:discord.Interaction):
-    await inter.response.send_message(view=RegisterView(user=inter.user, db=db))
+    data = db.child('members').child(inter.id).child('profile').get().val()
+    if not data:
+        await inter.response.send_message(view=RegisterView(user=inter.user, db=db))
 
 @app_commands.command(name="profile", description="lookup someone's profile or yours")
 async def profile(inter:discord.Interaction, mem:discord.Member=None):
